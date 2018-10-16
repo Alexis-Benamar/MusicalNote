@@ -1,0 +1,54 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        
+        <ion-list>
+            <ion-item>
+                <ion-label stacked>
+                    <ion-icon name="ios-person"></ion-icon>
+                    Username
+                </ion-label>
+                <ion-input type="text" formControlName="username"></ion-input>
+            </ion-item>
+    
+            <ion-item>
+                <ion-label stacked>
+                    <ion-icon name="ios-mail"></ion-icon>
+                    Email
+                </ion-label>
+                <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+    
+            <ion-item>
+                <ion-label stacked>
+                    <ion-icon name="ios-key"></ion-icon>
+                    Password
+                </ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+    
+            <ion-item>
+                <ion-label stacked>
+                    <ion-icon name="ios-key"></ion-icon>
+                    Password
+                </ion-label>
+                <ion-input type="password" formControlName="confirmpwd"></ion-input>
+            </ion-item>
+        </ion-list>
+
+    </form>
+
+</ion-content>

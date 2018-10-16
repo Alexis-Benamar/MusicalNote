@@ -1,0 +1,7 @@
+{
+  "name": "MusicalNote",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
