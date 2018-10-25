@@ -27,13 +27,15 @@ export class LoginPage {
         private menu: MenuController
     ) {
         this.loginForm = this.formBuilder.group({
-            email: ['', Validators.required],
-            password: ['', Validators.required],
+            email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
+            password: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         });
     }
 
     login() {
-        console.log(this.loginForm.value.email, this.loginForm.value.password);
+        if (this.loginForm.valid) {
+            console.log(this.loginForm.value);
+        }
     }
 
     register() {
@@ -46,6 +48,10 @@ export class LoginPage {
 
     ionViewDidEnter() {
         this.menu.swipeEnable(false);
+    }
+
+    ionViewWillLeave() {
+        this.loginForm.reset();
     }
 
 }

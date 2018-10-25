@@ -25,18 +25,24 @@ export class RegisterPage {
 
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
-            email: ['', Validators.required],
-            password: ['', Validators.required],
-            confirmpwd: ['', Validators.required],
+            email: ['', Validators.compose([Validators.required, Validators.email])],
+            password: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+            confirmpwd: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         });
     }
 
     register() {
-        console.log(this.registerForm.value);
+        if (this.registerForm.valid && this.registerForm.value.password === this.registerForm.value.confirmpwd) {
+            console.log(this.registerForm.value);
+        }
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad RegisterPage');
+    }
+
+    ionViewWillLeave() {
+        this.registerForm.reset();
     }
 
 }

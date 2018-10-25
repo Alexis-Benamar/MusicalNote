@@ -11,11 +11,14 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <form class="home-form" margin-top [formGroup]="registerForm" (ngSubmit)="register()">
         
-        <ion-list>
+        <div padding>
+
+            <h1 text-center padding>MusicalNote 🎺</h1>
+
             <ion-item>
                 <ion-label stacked>
                     <ion-icon name="ios-person"></ion-icon>
@@ -46,8 +49,17 @@
                     Confirm Password
                 </ion-label>
                 <ion-input type="password" formControlName="confirmpwd"></ion-input>
-            </ion-item>
-        </ion-list>
+            </ion-item>    
+        </div>
+
+        <button margin-top mode="ios" ion-button full color="secondary" type="submit" [disabled]="!registerForm.valid">
+            Register
+        </button>
+
+        <button margin-top mode="ios" ion-button icon-left full color="primary" (click)="this.navCtrl.pop()">
+            <ion-icon name="arrow-back"></ion-icon>
+            Back
+        </button>
 
     </form>
 

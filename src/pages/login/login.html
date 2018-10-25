@@ -8,7 +8,7 @@
 
 <ion-content>
 
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <form class="home-form" [formGroup]="loginForm" (ngSubmit)="login()">
 
         <div padding>
 
@@ -32,14 +32,13 @@
             
         </div>
 
-        <button margin-top mode="ios" ion-button icon-left full color="primary" type="submit" [disabled]="!loginForm.valid">
-            <ion-icon name="ios-log-in"></ion-icon>
-            LOGIN
+        <button margin-top mode="ios" ion-button icon-left full color="secondary" type="submit" [disabled]="!loginForm.valid">
+            Login
         </button>
 
-        <button margin-top mode="ios" ion-button icon-left full color="primary" (click)="register()">
+        <button margin-top mode="ios" ion-button icon-left full (click)="register()">
             <ion-icon name="person-add"></ion-icon>
-            REGISTER
+            Register
         </button>
 
     </form>
