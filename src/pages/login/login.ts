@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { RegisterPage } from '../register/register';
 
@@ -24,7 +25,8 @@ export class LoginPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private formBuilder: FormBuilder,
-        private menu: MenuController
+        private menu: MenuController,
+        private afAuth: AngularFireAuth,
     ) {
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
@@ -32,9 +34,16 @@ export class LoginPage {
         });
     }
 
-    login() {
+    async login() {
         if (this.loginForm.valid) {
             console.log(this.loginForm.value);
+
+            this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
+            .then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.error(error);
+            });
         }
     }
 

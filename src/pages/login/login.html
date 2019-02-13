@@ -29,18 +29,17 @@
                 </ion-label>
                 <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
-            
+
         </div>
 
         <button margin-top mode="ios" ion-button icon-left full color="secondary" type="submit" [disabled]="!loginForm.valid">
             Login
         </button>
+      </form>
 
-        <button margin-top mode="ios" ion-button icon-left full (click)="register()">
-            <ion-icon name="person-add"></ion-icon>
-            Register
-        </button>
-
-    </form>
+      <button margin-top mode="ios" ion-button icon-left full (click)="register()">
+          <ion-icon name="person-add"></ion-icon>
+          Register
+      </button>
 
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 /**
  * Generated class for the RegisterPage page.
@@ -21,7 +22,8 @@ export class RegisterPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder,
+        public afAuth: AngularFireAuth) {
 
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
@@ -31,9 +33,16 @@ export class RegisterPage {
         });
     }
 
-    register() {
+    async register() {
         if (this.registerForm.valid && this.registerForm.value.password === this.registerForm.value.confirmpwd) {
             console.log(this.registerForm.value);
+
+            this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(this.registerForm.value.email, this.registerForm.value.password)
+            .then(data => {
+              console.log(data);
+          }).catch(error => {
+              console.error(error);
+          });
         }
     }
 

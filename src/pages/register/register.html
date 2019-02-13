@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  
+
 
 </ion-header>
 
@@ -14,7 +14,7 @@
 <ion-content>
 
     <form class="home-form" margin-top [formGroup]="registerForm" (ngSubmit)="register()">
-        
+
         <div padding>
 
             <h1 text-center padding>MusicalNote 🎺</h1>
@@ -26,7 +26,7 @@
                 </ion-label>
                 <ion-input type="text" formControlName="username"></ion-input>
             </ion-item>
-    
+
             <ion-item>
                 <ion-label stacked>
                     <ion-icon name="ios-mail"></ion-icon>
@@ -34,7 +34,7 @@
                 </ion-label>
                 <ion-input type="email" formControlName="email"></ion-input>
             </ion-item>
-    
+
             <ion-item>
                 <ion-label stacked>
                     <ion-icon name="ios-key"></ion-icon>
@@ -42,25 +42,24 @@
                 </ion-label>
                 <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
-    
+
             <ion-item>
                 <ion-label stacked>
                     <ion-icon name="ios-key"></ion-icon>
                     Confirm Password
                 </ion-label>
                 <ion-input type="password" formControlName="confirmpwd"></ion-input>
-            </ion-item>    
+            </ion-item>
         </div>
 
         <button margin-top mode="ios" ion-button full color="secondary" type="submit" [disabled]="!registerForm.valid">
             Register
         </button>
+      </form>
 
-        <button margin-top mode="ios" ion-button icon-left full color="primary" (click)="this.navCtrl.pop()">
-            <ion-icon name="arrow-back"></ion-icon>
-            Back
-        </button>
-
-    </form>
+      <button margin-top mode="ios" ion-button icon-left full color="primary" (click)="this.navCtrl.pop()">
+          <ion-icon name="arrow-back"></ion-icon>
+          Back
+      </button>
 
 </ion-content>
