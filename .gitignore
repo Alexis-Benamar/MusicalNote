@@ -30,6 +30,7 @@ plugins/android.json
 plugins/ios.json
 www/
 .env
+app.firebase.config.ts
 $RECYCLE.BIN/
 
 .DS_Store
