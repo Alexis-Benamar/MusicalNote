@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, AlertController, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 
+import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
 
 /**
@@ -27,6 +28,8 @@ export class LoginPage {
         private formBuilder: FormBuilder,
         private menu: MenuController,
         private afAuth: AngularFireAuth,
+        private alertCtrl: AlertController,
+        private loadingCtrl: LoadingController,
     ) {
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
@@ -34,15 +37,24 @@ export class LoginPage {
         });
     }
 
-    async login() {
+    login() {
         if (this.loginForm.valid) {
-            console.log(this.loginForm.value);
+            let loading = this.loadingCtrl.create({
+                spinner: 'bubbles',
+                content: 'Creating user...'
+            });
+            loading.present();
 
             this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
             .then(data => {
-                console.log(data);
+                loading.dismiss();
+                this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'});
             }).catch(error => {
-                console.error(error);
+                loading.dismiss();
+                this.alertCtrl.create({
+                    title: 'Error',
+                    message: 'There has been an error when logging in.'
+                }).present();
             });
         }
     }

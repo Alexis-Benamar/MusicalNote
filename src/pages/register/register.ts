@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the RegisterPage page.
@@ -23,7 +25,9 @@ export class RegisterPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private formBuilder: FormBuilder,
-        public afAuth: AngularFireAuth) {
+        public afAuth: AngularFireAuth,
+        public alertCtrl: AlertController,
+        public loadingCtrl: LoadingController,) {
 
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
@@ -33,16 +37,27 @@ export class RegisterPage {
         });
     }
 
-    async register() {
+    register() {
         if (this.registerForm.valid && this.registerForm.value.password === this.registerForm.value.confirmpwd) {
-            console.log(this.registerForm.value);
+
+            let loading = this.loadingCtrl.create({
+                spinner: 'bubbles',
+                content: 'Creating user...'
+            });
+            loading.present();
 
             this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(this.registerForm.value.email, this.registerForm.value.password)
             .then(data => {
-              console.log(data);
-          }).catch(error => {
-              console.error(error);
-          });
+                loading.dismiss();
+                this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'});
+            }).catch(error => {
+                loading.dismiss();
+
+                this.alertCtrl.create({
+                    title: 'Error',
+                    message: 'There has been an error when logging in.'
+                }).present();
+            });
         }
     }
 
