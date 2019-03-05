@@ -45,9 +45,10 @@ export class LoginPage {
             });
             loading.present();
 
-            this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
+            this.afAuth.auth.signInAndRetrieveDataWithEmailAndPassword(this.loginForm.value.email, this.loginForm.value.password)
             .then(data => {
                 loading.dismiss();
+                console.log(data);
                 this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'});
             }).catch(error => {
                 loading.dismiss();
