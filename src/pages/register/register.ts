@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
+import { ToastProvider } from '../../providers/toast/toast'
 
 /**
  * Generated class for the RegisterPage page.
@@ -30,7 +31,8 @@ export class RegisterPage {
         public navCtrl: NavController,
         private formBuilder: FormBuilder,
         private afAuth: AngularFireAuth,
-        private storage: Storage) {
+        private storage: Storage,
+        private toastProvider: ToastProvider) {
 
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
@@ -48,7 +50,7 @@ export class RegisterPage {
               this.storage.set('user', res.user.toJSON())
               .then(() => this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'}))
             } catch(err) {
-              console.log(err)
+              this.toastProvider.toast(err.message)
             }
         }
     }
