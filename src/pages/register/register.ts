@@ -43,11 +43,12 @@ export class RegisterPage {
     }
 
     async register() {
-        const { email, password, confirmpwd } = this
+        const { username, email, password, confirmpwd } = this
         if (this.registerForm.valid && password === confirmpwd) {
             try {
               const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-              this.storage.set('user', res.user.toJSON())
+              res.user.updateProfile({ displayName: username, photoURL: '' })
+              .then(() => this.storage.set('user', res.user.toJSON()))
               .then(() => this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'}))
             } catch(err) {
               this.toastProvider.toast(err.message)
