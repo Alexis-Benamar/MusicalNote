@@ -24,7 +24,7 @@
                     <ion-icon name="ios-person"></ion-icon>
                     Username
                 </ion-label>
-                <ion-input type="text" formControlName="username"></ion-input>
+                <ion-input type="text" formControlName="username" [(ngModel)]="username"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -32,7 +32,7 @@
                     <ion-icon name="ios-mail"></ion-icon>
                     Email
                 </ion-label>
-                <ion-input type="email" formControlName="email"></ion-input>
+                <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -40,7 +40,7 @@
                     <ion-icon name="ios-key"></ion-icon>
                     Password
                 </ion-label>
-                <ion-input type="password" formControlName="password"></ion-input>
+                <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -48,7 +48,7 @@
                     <ion-icon name="ios-key"></ion-icon>
                     Confirm Password
                 </ion-label>
-                <ion-input type="password" formControlName="confirmpwd"></ion-input>
+                <ion-input type="password" formControlName="confirmpwd" [(ngModel)]="confirmpwd"></ion-input>
             </ion-item>
         </div>
 

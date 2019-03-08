@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
 
@@ -19,45 +20,36 @@ import { HomePage } from '../home/home';
 })
 export class RegisterPage {
 
-    registerForm: FormGroup;
+    registerForm: FormGroup
+    username: string = ""
+    email: string = ""
+    password: string = ""
+    confirmpwd: string = ""
 
     constructor(
         public navCtrl: NavController,
-        public navParams: NavParams,
         private formBuilder: FormBuilder,
-        public afAuth: AngularFireAuth,
-        public alertCtrl: AlertController,
-        public loadingCtrl: LoadingController,) {
+        private afAuth: AngularFireAuth,
+        private storage: Storage) {
 
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
             email: ['', Validators.compose([Validators.required, Validators.email])],
-            password: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-            confirmpwd: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+            password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+            confirmpwd: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
         });
     }
 
-    register() {
-        if (this.registerForm.valid && this.registerForm.value.password === this.registerForm.value.confirmpwd) {
-
-            let loading = this.loadingCtrl.create({
-                spinner: 'bubbles',
-                content: 'Creating user...'
-            });
-            loading.present();
-
-            this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(this.registerForm.value.email, this.registerForm.value.password)
-            .then(data => {
-                loading.dismiss();
-                this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'});
-            }).catch(error => {
-                loading.dismiss();
-
-                this.alertCtrl.create({
-                    title: 'Error',
-                    message: 'There has been an error when logging in.'
-                }).present();
-            });
+    async register() {
+        const { email, password, confirmpwd } = this
+        if (this.registerForm.valid && password === confirmpwd) {
+            try {
+              const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+              this.storage.set('user', res.user.toJSON())
+              .then(() => this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'}))
+            } catch(err) {
+              console.log(err)
+            }
         }
     }
 
