@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environments';
-import { Storage, IonicStorageModule } from '@ionic/storage'
+import { IonicStorageModule } from '@ionic/storage'
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
