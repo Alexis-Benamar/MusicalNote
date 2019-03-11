@@ -14,7 +14,8 @@ import { RegisterPage } from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ToastProvider } from '../providers/toast/toast';
+import { ToastProvider } from '../providers/toast';
+import { AuthService } from '../providers/auth';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ToastProvider } from '../providers/toast/toast';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastProvider,
+    AuthService
   ]
 })
 export class AppModule {}

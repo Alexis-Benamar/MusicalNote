@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage'
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { ListPage } from '../pages/list/list';
+import { AuthService } from '../providers/auth';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,7 +15,7 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any;
 
   pages: Array<{title: string, component: any}>;
 
@@ -23,6 +24,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public storage: Storage,
+    private auth: AuthService
   ) {
     this.initializeApp();
 
@@ -41,6 +43,19 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    this.auth.afAuth.authState.subscribe(
+      user => {
+        if (user) {
+          this.rootPage = HomePage;
+        } else {
+          this.rootPage = LoginPage;
+        }
+      },
+      () => {
+        this.rootPage = LoginPage;
+      }
+    );
   }
 
   openPage(page) {
@@ -51,6 +66,7 @@ export class MyApp {
 
   logout() {
     this.storage.clear()
+    .then(() => this.auth.signOut())
     .then(() => this.nav.setRoot(LoginPage, {}, { animate: true, direction: 'forward' }))
   }
 }

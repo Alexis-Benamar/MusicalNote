@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
-import { ToastProvider } from '../../providers/toast/toast'
+import { ToastProvider } from '../../providers/toast'
+import { AuthService } from '../../providers/auth';
 
 /**
  * Generated class for the RegisterPage page.
@@ -30,7 +30,7 @@ export class RegisterPage {
     constructor(
         public navCtrl: NavController,
         private formBuilder: FormBuilder,
-        private afAuth: AngularFireAuth,
+        private auth: AuthService,
         private storage: Storage,
         private toastProvider: ToastProvider) {
 
@@ -44,9 +44,10 @@ export class RegisterPage {
 
     async register() {
         const { username, email, password, confirmpwd } = this
+
         if (this.registerForm.valid && password === confirmpwd) {
             try {
-              const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+              const res = await this.auth.createUser({ email: email, password: password })
               res.user.updateProfile({ displayName: username, photoURL: '' })
               .then(() => this.storage.set('user', res.user.toJSON()))
               .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))

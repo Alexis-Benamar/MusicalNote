@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, MenuController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
-import { ToastProvider } from '../../providers/toast/toast'
+import { ToastProvider } from '../../providers/toast'
+import { AuthService } from '../../providers/auth';
 
 /**
  * Generated class for the LoginPage page.
@@ -30,7 +30,7 @@ export class LoginPage {
         public navCtrl: NavController,
         private formBuilder: FormBuilder,
         private menu: MenuController,
-        private afAuth: AngularFireAuth,
+        private auth: AuthService,
         private storage: Storage,
         private toastProvider: ToastProvider,
     ) {
@@ -43,8 +43,9 @@ export class LoginPage {
     async login() {
       if (this.loginForm.valid) {
         const { email, password } = this
+
         try {
-          const res = await this.afAuth.auth.signInWithEmailAndPassword(email, password)
+          const res = await this.auth.signInWithEmail({ email: email, password: password })
           this.storage.set('user', res.user.toJSON())
           .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
         } catch(err) {
