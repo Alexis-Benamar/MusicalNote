@@ -5,7 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../home/home';
 import { ToastProvider } from '../../providers/toast'
 import { AuthService } from '../../providers/auth';
-
+import { AngularFireDatabase } from '@angular/fire/database';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -30,8 +30,9 @@ export class RegisterPage {
         public navCtrl: NavController,
         private formBuilder: FormBuilder,
         private auth: AuthService,
-        private toastProvider: ToastProvider) {
-
+        private toastProvider: ToastProvider,
+        private db: AngularFireDatabase
+    ) {
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
             email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -47,6 +48,11 @@ export class RegisterPage {
             try {
               const res = await this.auth.createUser({ email: email, password: password })
               res.user.updateProfile({ displayName: username, photoURL: '' })
+              .then(() => this.db.database.ref('users/' + res.user.uid).set({
+                username: res.user.displayName,
+                email: res.user.email,
+                profilePicture: res.user.photoURL,
+              }))
               .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
             } catch(err) {
               this.toastProvider.toast(err.message)
