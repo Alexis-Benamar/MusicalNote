@@ -4,10 +4,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage'
 
+import { AuthService } from '../providers/auth';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { ListPage } from '../pages/list/list';
-import { AuthService } from '../providers/auth';
+import { ProfilePage } from '../pages/profile/profile'
 
 @Component({
   templateUrl: 'app.html'
@@ -31,7 +32,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'List', component: ListPage },
+      { title: 'Profile', component: ProfilePage },
     ];
 
   }
@@ -46,14 +48,14 @@ export class MyApp {
 
     this.auth.afAuth.authState.subscribe(
       user => {
-        if (user) {
-          this.rootPage = HomePage;
+        if (user && this.rootPage != HomePage) {
+          this.rootPage = HomePage
         } else {
-          this.rootPage = LoginPage;
+          this.rootPage = LoginPage
         }
       },
       () => {
-        this.rootPage = LoginPage;
+        this.rootPage = LoginPage
       }
     );
   }

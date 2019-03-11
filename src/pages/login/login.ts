@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
+import { ListPage } from '../list/list'
 import { RegisterPage } from '../register/register';
 import { ToastProvider } from '../../providers/toast'
 import { AuthService } from '../../providers/auth';
@@ -31,7 +32,6 @@ export class LoginPage {
         private formBuilder: FormBuilder,
         private menu: MenuController,
         private auth: AuthService,
-        private storage: Storage,
         private toastProvider: ToastProvider,
     ) {
         this.loginForm = this.formBuilder.group({
@@ -45,8 +45,7 @@ export class LoginPage {
         const { email, password } = this
 
         try {
-          const res = await this.auth.signInWithEmail({ email: email, password: password })
-          this.storage.set('user', res.user.toJSON())
+          this.auth.signInWithEmail({ email: email, password: password })
           .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
         } catch(err) {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
@@ -60,6 +59,10 @@ export class LoginPage {
 
     register() {
         this.navCtrl.push(RegisterPage)
+    }
+
+    list() {
+      this.navCtrl.push(ListPage)
     }
 
     ionViewDidLoad() {

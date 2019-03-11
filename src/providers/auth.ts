@@ -20,12 +20,15 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
   }
 
-  get authenticated(): boolean {
-    return this.user !== null
-  }
-
   signOut(): Promise<void> {
     return this.afAuth.auth.signOut()
   }
 
+  getUser(): firebase.User {
+    return this.user
+  }
+
+  get authenticated(): boolean {
+    return this.user !== null
+  }
 }

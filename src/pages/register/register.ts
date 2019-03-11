@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
 import { ToastProvider } from '../../providers/toast'
@@ -31,7 +30,6 @@ export class RegisterPage {
         public navCtrl: NavController,
         private formBuilder: FormBuilder,
         private auth: AuthService,
-        private storage: Storage,
         private toastProvider: ToastProvider) {
 
         this.registerForm = this.formBuilder.group({
@@ -49,7 +47,6 @@ export class RegisterPage {
             try {
               const res = await this.auth.createUser({ email: email, password: password })
               res.user.updateProfile({ displayName: username, photoURL: '' })
-              .then(() => this.storage.set('user', res.user.toJSON()))
               .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
             } catch(err) {
               this.toastProvider.toast(err.message)
