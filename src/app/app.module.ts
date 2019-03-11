@@ -43,7 +43,7 @@ import { ToastProvider } from '../providers/toast/toast';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ToastProvider
+    ToastProvider,
   ]
 })
 export class AppModule {}

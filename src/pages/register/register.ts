@@ -49,7 +49,7 @@ export class RegisterPage {
               const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
               res.user.updateProfile({ displayName: username, photoURL: '' })
               .then(() => this.storage.set('user', res.user.toJSON()))
-              .then(() => this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'}))
+              .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
             } catch(err) {
               this.toastProvider.toast(err.message)
             }

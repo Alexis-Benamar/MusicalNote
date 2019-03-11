@@ -46,7 +46,7 @@ export class LoginPage {
         try {
           const res = await this.afAuth.auth.signInWithEmailAndPassword(email, password)
           this.storage.set('user', res.user.toJSON())
-          .then(() => this.navCtrl.setRoot(HomePage, {animate: true, direction: 'forward'}))
+          .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
         } catch(err) {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
             this.toastProvider.toast('Invalid email or password.')
