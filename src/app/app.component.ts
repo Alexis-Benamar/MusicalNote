@@ -49,7 +49,7 @@ export class MyApp {
     this.auth.afAuth.authState.subscribe(
       user => {
         if (user && this.rootPage != HomePage) {
-          this.rootPage = HomePage
+          user.emailVerified ? this.rootPage = HomePage : this.rootPage = LoginPage
         } else {
           this.rootPage = LoginPage
         }

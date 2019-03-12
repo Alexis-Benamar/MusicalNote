@@ -17,7 +17,7 @@ import { ModalNewSongPage } from '../pages/modal-new-song/modal-new-song'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ToastProvider } from '../providers/toast';
+import { NotifProvider } from '../providers/notif';
 import { AuthService } from '../providers/auth';
 
 @NgModule({
@@ -52,7 +52,7 @@ import { AuthService } from '../providers/auth';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ToastProvider,
+    NotifProvider,
     AuthService,
   ]
 })

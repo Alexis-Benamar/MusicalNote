@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage'
 import { HomePage } from '../home/home';
 import { ListPage } from '../list/list'
 import { RegisterPage } from '../register/register';
-import { ToastProvider } from '../../providers/toast'
+import { NotifProvider } from '../../providers/notif'
 import { AuthService } from '../../providers/auth';
 
 /**
@@ -32,7 +32,7 @@ export class LoginPage {
         private formBuilder: FormBuilder,
         private menu: MenuController,
         private auth: AuthService,
-        private toastProvider: ToastProvider,
+        private notifProvider: NotifProvider,
     ) {
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
@@ -44,16 +44,15 @@ export class LoginPage {
       if (this.loginForm.valid) {
         const { email, password } = this
 
-        try {
-          this.auth.signInWithEmail({ email: email, password: password })
-          .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
-        } catch(err) {
+        this.auth.signInWithEmail({ email: email, password: password })
+        .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
+        .catch(err => {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-            this.toastProvider.toast('Invalid email or password.')
+            this.notifProvider.toast('Invalid email or password.')
           } else {
-            this.toastProvider.toast('Problem when logging in.')
+            this.notifProvider.toast('Problem when logging in.')
           }
-        }
+        })
       }
     }
 

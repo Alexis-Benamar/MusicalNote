@@ -3,8 +3,9 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { HomePage } from '../home/home';
-import { ToastProvider } from '../../providers/toast'
+import { NotifProvider } from '../../providers/notif'
 import { AuthService } from '../../providers/auth';
+import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFireDatabase } from '@angular/fire/database';
 /**
  * Generated class for the RegisterPage page.
@@ -30,7 +31,7 @@ export class RegisterPage {
         public navCtrl: NavController,
         private formBuilder: FormBuilder,
         private auth: AuthService,
-        private toastProvider: ToastProvider,
+        private notifProvider: NotifProvider,
         private db: AngularFireDatabase
     ) {
         this.registerForm = this.formBuilder.group({
@@ -42,22 +43,27 @@ export class RegisterPage {
     }
 
     async register() {
-        const { username, email, password, confirmpwd } = this
+      const { username, email, password, confirmpwd } = this
 
-        if (this.registerForm.valid && password === confirmpwd) {
-            try {
-              const res = await this.auth.createUser({ email: email, password: password })
-              res.user.updateProfile({ displayName: username, photoURL: '' })
-              .then(() => this.db.database.ref('users/' + res.user.uid).set({
-                username: res.user.displayName,
-                email: res.user.email,
-                profilePicture: res.user.photoURL,
-              }))
-              .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
-            } catch(err) {
-              this.toastProvider.toast(err.message)
-            }
+      if (this.registerForm.valid && password === confirmpwd) {
+        try {
+          const res = await this.auth.createUser({ email: email, password: password })
+          res.user.updateProfile({ displayName: username, photoURL: '' })
+          .then(() => this.db.database.ref('users/' + res.user.uid).set({
+            username: res.user.displayName,
+            email: res.user.email,
+            profilePicture: res.user.photoURL,
+          }))
+          .then(() => res.user.sendEmailVerification())
+          .then(() => this.notifProvider.alert('Check your mailbox!', 'A verification email was sent.'))
+          .then(() => this.navCtrl.pop())
+          .catch(err => {
+            this.notifProvider.alert('Error', err.message)
+          })
+        } catch(err) {
+          this.notifProvider.alert('Error', err.message)
         }
+      }
     }
 
     ionViewDidLoad() {
