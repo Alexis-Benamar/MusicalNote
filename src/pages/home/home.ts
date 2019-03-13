@@ -36,6 +36,14 @@ export class HomePage {
       buttons: [
         { text: 'Cancel', role: 'Cancel' },
         {
+          text: 'Delete',
+          handler: data => {
+            if (song.key !== undefined) {
+              this.db.database.ref(`songs/${ this.user.uid }`).child(song.key).remove()
+            }
+          }
+        },
+        {
           text: 'Save',
           handler: data => {
             if (song.key !== undefined) {
@@ -60,8 +68,5 @@ export class HomePage {
       })
       console.log(this.songsList)
     })
-  }
-
-  ionViewWillLoad() {
   }
 }
