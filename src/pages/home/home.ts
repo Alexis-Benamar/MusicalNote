@@ -21,29 +21,28 @@ export class HomePage {
     private alertCtrl: AlertController,
   ) {
     this.user = this.auth.getUser()
-  }
-
-  addSong() {
-    this.modalCtrl.create(ModalNewSongPage).present()
+    this.loadSongs()
   }
 
   updateSong(song) {
     this.alertCtrl.create({
       title: 'Modify song',
       inputs: [
-        { name: 'title', value: song.title },
-        { name: 'artist', value: song.artist },
-        { name: 'instrument', value: song.instrument },
-        { name: 'link', value: song.link },
+        { name: 'title', placeholder: 'Title', value: song.title },
+        { name: 'artist', placeholder: 'Artist', value: song.artist },
+        { name: 'instrument', placeholder: 'Instrument', value: song.instrument },
+        { name: 'link', placeholder: 'Link', value: song.link },
       ],
       buttons: [
         { text: 'Cancel', role: 'Cancel' },
         {
           text: 'Save',
           handler: data => {
-
-            console.log(data)
-            //this.db.database.ref(`songs/${ this.user.uid }`).set()
+            if (song.key !== undefined) {
+              this.db.database.ref(`songs/${ this.user.uid }/${ song.key }`).set(data)
+            } else {
+              this.db.database.ref(`songs/${ this.user.uid }`).push().set(data)
+            }
           }
         }
       ]
@@ -52,6 +51,7 @@ export class HomePage {
 
   loadSongs() {
     this.db.database.ref(`songs/${ this.user.uid }`).on('value', snapshot => {
+      this.songsList = []
       snapshot.forEach(song => {
         this.songsList.push({
           key: song.key,
@@ -63,6 +63,5 @@ export class HomePage {
   }
 
   ionViewWillLoad() {
-    this.loadSongs()
   }
 }
