@@ -16,6 +16,10 @@ export class AuthService {
     return this.user !== null
   }
 
+  get verified(): boolean {
+    return this.user.emailVerified
+  }
+
   createUser(credentials) {
     return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password)
   }

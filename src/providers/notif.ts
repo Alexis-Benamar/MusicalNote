@@ -1,5 +1,6 @@
 import { AlertController, ToastController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database'
 
 /*
   Generated class for the toastProvider provider.
@@ -10,7 +11,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class NotifProvider {
 
-  constructor(private toastCtrl: ToastController, private alertCtrl: AlertController) {
+  constructor(
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    private db: AngularFireDatabase) {
   }
 
   toast(message: string) {

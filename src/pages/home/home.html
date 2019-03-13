@@ -10,9 +10,11 @@
 <ion-content padding>
   <h3>Welcome, {{user.displayName}}</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-list>
+    <button ion-item *ngFor="let song of songsList" (click)="updateSong(song)">
+      {{song?.artist}} - {{song?.title}}
+    </button>
+  </ion-list>
 
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="addSong()">

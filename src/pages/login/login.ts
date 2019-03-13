@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, MenuController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Storage } from '@ionic/storage'
 
 import { HomePage } from '../home/home';
 import { ListPage } from '../list/list'
@@ -45,7 +44,13 @@ export class LoginPage {
         const { email, password } = this
 
         this.auth.signInWithEmail({ email: email, password: password })
-        .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
+        .then(res => {
+          if (res.user.emailVerified) {
+            this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' })
+          } else {
+            this.notifProvider.alert('Uh oh!', 'Your email address is currently not verified. Please check your emails')
+          }
+        })
         .catch(err => {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
             this.notifProvider.toast('Invalid email or password.')
