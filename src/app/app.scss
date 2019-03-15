@@ -17,20 +17,21 @@
 
 
 .home-form {
-
     margin-top: 20vh;
-
     h1 {
         margin-bottom: 30px;
     }
-
 }
 
 .toolbar-background {
   background-color: color($colors, primary);
-
 }
 
 .toolbar-title {
   color: #fff;
+}
+
+.center-button {
+  display: block;
+  margin: 0 auto;
 }
