@@ -14,7 +14,8 @@ export class NotifProvider {
   constructor(
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private db: AngularFireDatabase) {
+  ){
+
   }
 
   toast(message: string) {

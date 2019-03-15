@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { NotifProvider } from '../../providers/notif'
 import { AuthService } from '../../providers/auth';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -39,9 +40,9 @@ export class RegisterPage {
         try {
           const res = await this.auth.createUser({ email: email, password: password })
           res.user.updateProfile({ displayName: username, photoURL: '' })
-          .then(() => res.user.sendEmailVerification())
-          .then(() => this.notifProvider.alert('Check your mailbox!', 'A verification email was sent.'))
-          .then(() => this.navCtrl.pop())
+          //.then(() => res.user.sendEmailVerification())
+          //.then(() => this.notifProvider.alert('Check your mailbox!', 'A verification email was sent.'))
+          .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward'}))
           .catch(err => {
             this.notifProvider.alert('Error', err.message)
           })

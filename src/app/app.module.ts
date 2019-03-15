@@ -10,10 +10,8 @@ import { IonicStorageModule } from '@ionic/storage'
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register'
-import { ProfilePage } from '../pages/profile/profile'
-import { ModalNewSongPage } from '../pages/modal-new-song/modal-new-song'
+import { AccountPage } from '../pages/account/account'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,10 +22,8 @@ import { AuthService } from '../providers/auth';
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
-    ModalNewSongPage,
-    ProfilePage,
+    AccountPage,
     RegisterPage,
   ],
   imports: [
@@ -42,10 +38,8 @@ import { AuthService } from '../providers/auth';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
-    ModalNewSongPage,
-    ProfilePage,
+    AccountPage,
     RegisterPage,
   ],
   providers: [

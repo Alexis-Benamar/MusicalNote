@@ -3,7 +3,6 @@ import { IonicPage, NavController, MenuController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { HomePage } from '../home/home';
-import { ListPage } from '../list/list'
 import { RegisterPage } from '../register/register';
 import { NotifProvider } from '../../providers/notif'
 import { AuthService } from '../../providers/auth';
@@ -44,18 +43,13 @@ export class LoginPage {
         const { email, password } = this
 
         this.auth.signInWithEmail({ email: email, password: password })
-        .then(res => {
-          if (res.user.emailVerified) {
-            this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' })
-          } else {
-            this.notifProvider.alert('Uh oh!', 'Your email address is currently not verified. Please check your emails')
-          }
-        })
+        .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
         .catch(err => {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
             this.notifProvider.toast('Invalid email or password.')
           } else {
-            this.notifProvider.toast('Problem when logging in.')
+            // this.notifProvider.toast('Problem when logging in.')
+            this.notifProvider.alert('error', err.message)
           }
         })
       }
@@ -63,10 +57,6 @@ export class LoginPage {
 
     register() {
         this.navCtrl.push(RegisterPage)
-    }
-
-    list() {
-      this.navCtrl.push(ListPage)
     }
 
     ionViewDidLoad() {

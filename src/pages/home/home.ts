@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth';
 import { AngularFireDatabase } from '@angular/fire/database'
-import { ModalNewSongPage } from '../../pages/modal-new-song/modal-new-song'
 import { AlertController } from 'ionic-angular'
 
 @Component({
@@ -16,7 +14,6 @@ export class HomePage {
 
   constructor(
     private auth: AuthService,
-    private modalCtrl: ModalController,
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
   ) {
@@ -37,7 +34,7 @@ export class HomePage {
         { text: 'Cancel', role: 'Cancel' },
         {
           text: 'Delete',
-          handler: data => {
+          handler: () => {
             if (song.key !== undefined) {
               this.db.database.ref(`songs/${ this.user.uid }`).child(song.key).remove()
             }
@@ -47,9 +44,10 @@ export class HomePage {
           text: 'Save',
           handler: data => {
             if (song.key !== undefined) {
-              this.db.database.ref(`songs/${ this.user.uid }/${ song.key }`).set(data)
+              this.db.database.ref(`songs/${ this.user.uid }/${ song.key }`).set({ key: song.key, ...data })
             } else {
-              this.db.database.ref(`songs/${ this.user.uid }`).push().set(data)
+              let newKey = this.db.database.ref(`songs/${ this.user.uid }`).push().key
+              this.db.database.ref(`songs/${ this.user.uid }/${newKey}`).set({ key: newKey, ...data })
             }
           }
         }
@@ -58,15 +56,8 @@ export class HomePage {
   }
 
   loadSongs() {
-    this.db.database.ref(`songs/${ this.user.uid }`).on('value', snapshot => {
-      this.songsList = []
-      snapshot.forEach(song => {
-        this.songsList.push({
-          key: song.key,
-          ...song.val()
-        })
-      })
-      console.log(this.songsList)
+    this.db.list(`songs/${ this.user.uid }`).valueChanges().subscribe(data => {
+      this.songsList = [...data]
     })
   }
 }
