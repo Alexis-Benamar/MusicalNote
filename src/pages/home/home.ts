@@ -23,7 +23,7 @@ export class HomePage {
 
   updateSong(song) {
     this.alertCtrl.create({
-      title: 'Modify song',
+      title: 'Edit song',
       inputs: [
         { name: 'title', placeholder: 'Title', value: song.title },
         { name: 'artist', placeholder: 'Artist', value: song.artist },

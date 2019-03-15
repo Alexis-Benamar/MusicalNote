@@ -38,7 +38,7 @@ export class LoginPage {
         });
     }
 
-    async login() {
+    login() {
       if (this.loginForm.valid) {
         const { email, password } = this
 
@@ -48,8 +48,7 @@ export class LoginPage {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
             this.notifProvider.toast('Invalid email or password.')
           } else {
-            // this.notifProvider.toast('Problem when logging in.')
-            this.notifProvider.alert('error', err.message)
+            this.notifProvider.toast('Problem when logging in.')
           }
         })
       }

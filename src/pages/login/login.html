@@ -30,13 +30,12 @@
 
         </div>
 
-        <button margin-top mode="ios" ion-button icon-left full color="secondary" type="submit" [disabled]="!loginForm.valid">
+        <button class="lp-button" margin-top mode="ios" ion-button round color="primary" type="submit" [disabled]="!loginForm.valid">
             Login
         </button>
       </form>
 
-      <button margin-top mode="ios" ion-button icon-left full (click)="register()">
-          <ion-icon name="person-add"></ion-icon>
+      <button class="lp-button" margin-top mode="ios" ion-button round clear color="primary" (click)="register()">
           Register
       </button>
 
