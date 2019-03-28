@@ -8,35 +8,35 @@
 
 <ion-content>
 
-    <form class="home-form" [formGroup]="loginForm" (ngSubmit)="login()">
+  <form class="home-form" [formGroup]="loginForm" (ngSubmit)="login()">
 
-        <div padding>
+    <div padding>
 
-            <h1 text-center padding>MusicalNote 🎺</h1>
+      <h1 text-center padding>MusicalNote 🎺</h1>
 
-            <ion-item>
-                <ion-label stacked>
-                  Email
-                </ion-label>
-                <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Email
+        </ion-label>
+        <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
 
-            <ion-item>
-                <ion-label stacked>
-                  Password
-                </ion-label>
-                <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Password
+        </ion-label>
+        <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
 
-        </div>
+    </div>
 
-        <button class="center-button" margin-top mode="ios" ion-button round color="primary" type="submit" [disabled]="!loginForm.valid">
-            Login
-        </button>
-      </form>
+    <button class="center-button" margin-top mode="ios" ion-button round color="primary" type="submit" [disabled]="!loginForm.valid">
+        Login
+    </button>
+  </form>
 
-      <button class="center-button" margin-top mode="ios" ion-button round clear color="primary" (click)="register()">
-          Register
-      </button>
+  <button class="center-button" margin-top mode="ios" ion-button round clear color="primary" (click)="register()">
+      Register
+  </button>
 
 </ion-content>

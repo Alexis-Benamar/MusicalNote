@@ -21,53 +21,53 @@ import { AuthService } from '../../providers/auth';
 })
 export class LoginPage {
 
-    loginForm: FormGroup
-    email: string = ""
-    password: string = ""
+  loginForm: FormGroup
+  email: string = ""
+  password: string = ""
 
-    constructor(
-        public navCtrl: NavController,
-        private formBuilder: FormBuilder,
-        private menu: MenuController,
-        private auth: AuthService,
-        private notifProvider: NotifProvider,
-    ) {
-        this.loginForm = this.formBuilder.group({
-            email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
-            password: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-        });
+  constructor(
+    public navCtrl: NavController,
+    private formBuilder: FormBuilder,
+    private menu: MenuController,
+    private auth: AuthService,
+    private notifProvider: NotifProvider,
+  ) {
+    this.loginForm = this.formBuilder.group({
+        email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
+        password: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+    });
+  }
+
+  login() {
+    if (this.loginForm.valid) {
+      const { email, password } = this
+
+      this.auth.signInWithEmail({ email: email, password: password })
+      .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
+      .catch(err => {
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+          this.notifProvider.toast('Invalid email or password.')
+        } else {
+          this.notifProvider.toast('Problem when logging in.')
+        }
+      })
     }
+  }
 
-    login() {
-      if (this.loginForm.valid) {
-        const { email, password } = this
+  register() {
+    this.navCtrl.push(RegisterPage)
+  }
 
-        this.auth.signInWithEmail({ email: email, password: password })
-        .then(() => this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' }))
-        .catch(err => {
-          if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-            this.notifProvider.toast('Invalid email or password.')
-          } else {
-            this.notifProvider.toast('Problem when logging in.')
-          }
-        })
-      }
-    }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage')
+  }
 
-    register() {
-        this.navCtrl.push(RegisterPage)
-    }
+  ionViewDidEnter() {
+    this.menu.swipeEnable(false)
+  }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad LoginPage')
-    }
-
-    ionViewDidEnter() {
-        this.menu.swipeEnable(false)
-    }
-
-    ionViewWillLeave() {
-        this.loginForm.reset()
-    }
+  ionViewWillLeave() {
+    this.loginForm.reset()
+  }
 
 }

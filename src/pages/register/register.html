@@ -13,49 +13,49 @@
 
 <ion-content>
 
-    <form class="home-form" margin-top [formGroup]="registerForm" (ngSubmit)="register()">
+  <form class="home-form" margin-top [formGroup]="registerForm" (ngSubmit)="register()">
 
-        <div padding>
+    <div padding>
 
-            <h1 text-center padding>MusicalNote 🎺</h1>
+      <h1 text-center padding>MusicalNote 🎺</h1>
 
-            <ion-item>
-                <ion-label stacked>
-                    Username
-                </ion-label>
-                <ion-input type="text" formControlName="username" [(ngModel)]="username"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Username
+        </ion-label>
+        <ion-input type="text" formControlName="username" [(ngModel)]="username"></ion-input>
+      </ion-item>
 
-            <ion-item>
-                <ion-label stacked>
-                    Email
-                </ion-label>
-                <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Email
+        </ion-label>
+        <ion-input type="email" formControlName="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
 
-            <ion-item>
-                <ion-label stacked>
-                    Password (6 chars min.)
-                </ion-label>
-                <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
-            </ion-item>
+      <ion-item>
+        <ion-label stacked>
+          Password (6 chars min.)
+        </ion-label>
+        <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
 
-            <ion-item>
-                <ion-label stacked>
-                    Confirm Password
-                </ion-label>
-                <ion-input type="password" formControlName="confirmpwd" [(ngModel)]="confirmpwd"></ion-input>
-            </ion-item>
-        </div>
+      <ion-item>
+        <ion-label stacked>
+          Confirm Password
+        </ion-label>
+        <ion-input type="password" formControlName="confirmpwd" [(ngModel)]="confirmpwd"></ion-input>
+      </ion-item>
+    </div>
 
-        <button class="center-button" margin-top mode="ios" ion-button round color="primary" type="submit" [disabled]="!registerForm.valid">
-            Register
-        </button>
-      </form>
+    <button class="center-button" margin-top mode="ios" ion-button round color="primary" type="submit" [disabled]="!registerForm.valid">
+      Register
+    </button>
+  </form>
 
-      <button margin-top mode="ios" ion-button icon-left full clear color="primary" (click)="this.navCtrl.pop()">
-          <ion-icon name="arrow-back"></ion-icon>
-          Back
-      </button>
+  <button margin-top mode="ios" ion-button icon-left full clear color="primary" (click)="this.navCtrl.pop()">
+    <ion-icon name="arrow-back"></ion-icon>
+    Back
+  </button>
 
 </ion-content>
