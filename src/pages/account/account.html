@@ -10,14 +10,16 @@
 
 <ion-content padding>
 
-  <ion-list>
-    <ion-item>
-      <b>Username:</b> {{user.displayName}}
+  <section class="account-fields">
+    <ion-item class="fields-row">
+      <ion-label color="dark" class="field-title"><b>Username: </b></ion-label>
+      <ion-input class="field-value" value="{{user.displayName}}"></ion-input>
     </ion-item>
-    <ion-item>
-      <b>Email:</b> {{user.email}}
+    <ion-item class="fields-row">
+      <ion-label color="dark" class="field-title"><b>Email: </b></ion-label>
+      <ion-input class="field-value" readonly value="{{user.email}}"></ion-input>
     </ion-item>
-  </ion-list>
+  </section>
 
 
 </ion-content>
