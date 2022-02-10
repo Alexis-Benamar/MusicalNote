@@ -31,7 +31,7 @@
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "kind-of": "^6.0.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.4.0",
     "sw-toolbox": "3.6.0",
